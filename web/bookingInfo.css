@@ -1,0 +1,67 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2 Jul, 2017, 3:08:33 PM
+    Author     : D3LL
+*/
+
+
+#curve
+{
+
+    width: 500px;
+   height: 100px;
+   border: solid 2px #000;
+  border-color: transparent transparent #000 transparent;   
+  border-radius: 0 0 240px 50%/60px;
+}
+
+	* {
+    margin: 0;
+    padding: 0;
+}
+
+.seat {
+    float: left;
+    margin: 5px;
+    width: 35px;
+    height: 40px;
+    border: 2px solid #6699ff ;
+    border-radius: 5px;
+}
+.seats
+{
+         display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;  
+
+}
+
+.seat-select {
+    display: none;
+}
+
+.seat-select:checked+.seat {
+    background-color: black;
+     border: 2px solid black;
+    border-radius: 5px;
+    
+} 
+seat:hover
+{
+    background:#777;
+}
+
+
+
+ input[type="checkbox"]:disabled  
+      {
+          background-color: black;
+     border: 2px solid black;
+    border-radius: 5px;
+
+      }
