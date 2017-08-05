@@ -156,7 +156,7 @@
   <img  id="img" src="{{x.theater_pic}}" style="width:100%">
    <div class="caption">
        
-       <form action="seatMapping" method="post">
+       <form action="seatMapping.jsp" method="post">
            
        <span><h3><i>{{x.theater_name}}</i></h3></span>       
       <input type="hidden" name="theater_name" value="{{x.theater_name}}">

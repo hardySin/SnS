@@ -73,6 +73,11 @@ public class seatMapping extends HttpServlet {
 
         if(theater_name.equals(theater_nameToDta))
         {
+            request.setAttribute("theater_name", theater_name);
+//            request.setAttribute("theater_name", theater_name);
+//            request.setAttribute("theater_name", theater_name);
+//            request.setAttribute("theater_name", theater_name);
+          
             response.sendRedirect(theater_plan);
         }
         

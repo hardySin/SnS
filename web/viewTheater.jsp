@@ -50,7 +50,7 @@
    <ul class="nav nav-tabs nav-justified">
     <li class="active"><a data-toggle="tab" href="#home">Ticket's Info</a></li>
     <li><a data-toggle="tab" href="#menu1">Theatre's</a></li>
-    <li><a data-toggle="tab" href="#menu2">User Message</a></li>
+    <li><a data-toggle="tab" href="#menu2">User Message<span class="badage"><%=messageInterImp.mess_count()%></span></a></li>
     <li><a data-toggle="tab" href="#menu3">Profile's</a></li>
   </ul>
 

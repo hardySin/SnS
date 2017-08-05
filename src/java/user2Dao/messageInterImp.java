@@ -5,12 +5,15 @@
  */
 package user2Dao;
 
+import com.sun.tools.ws.processor.modeler.ModelerConstants;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.security.auth.message.callback.PrivateKeyCallback;
 import userDAO.LoadApp;
 
 /**
@@ -21,9 +24,10 @@ public class messageInterImp  implements  messageInterface{
 
     
                     message mess=new message();
+                      static int count=0;
 
     @Override
-    public void message_add(message mess) {
+    public void message_add(message mess)  {
 
         
         String  query="insert into MESSAGE(username,email,phone_no,address,message) values(?,?,?,?,?)";
@@ -34,13 +38,24 @@ public class messageInterImp  implements  messageInterface{
             ps.setString(3, mess.getAddress());
             ps.setString(4, mess.getPhone_no());
             ps.setString(5, mess.getMessage());
-
+                     
+            count=ps.executeUpdate();
+                        
+                  
         } catch (SQLException ex) {
             
             System.err.println("error :" + ex);
         }
     }
-
+    public static List mess_count()
+    {
+        
+        List<Integer> list=new ArrayList();
+        list.add(count);
+    return list;
+    
+            }
+    
     public ArrayList<message> view_mess() {
         
         ArrayList list=new ArrayList();

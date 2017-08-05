@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -46,45 +47,66 @@ public class otp_generate extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet otp_generate</title>");            
-            out.println("</head>");
-            out.println("<body>");
+            
+     int emailUserOTP_ID = 0;
+     String  user_name = request.getParameter("first_name");
+          String user_phone = request.getParameter("phone");  
+          String user_emailId = request.getParameter("emailId"); 
+          
+         
+          String enter_name = null,enter_moblie = null,enter_email=null;
+           
 
-     String emailUserOTP_ID="";
-          String  user_name=request.getParameter("first_name");
-          String user_phone=request.getParameter("phone");  
-          String user_emailId=request.getParameter("emailId");  
-
-            String query="select id from user_profiles where firstname=? and emailid=?";
+            System.out.println("enter value :"+user_emailId+user_name+user_phone);
+            System.out.println("data base value :"+enter_email+enter_name+enter_moblie+emailUserOTP_ID);
+            String query="select * from USER_PROFILES where EMAILID=?";
             PreparedStatement ps=LoadApp.conn.prepareStatement(query);
-            ps.setString(1, user_name);
-            ps.setString(2, user_emailId);
-
+            ps.setString(1, user_emailId);
+            
             ResultSet rs=ps.executeQuery();
             while (rs.next()) {                
-                emailUserOTP_ID=rs.getString(1);
+                emailUserOTP_ID=rs.getInt(1);
+                enter_name=rs.getString(2);
+                enter_email=rs.getString(5);
+                enter_moblie=rs.getString(7);
             }
+            
+            if(user_name==null &&user_phone==null &&user_emailId==null)
+            {
+                response.getWriter().println("Please enter the field first please!!");
+            }
+            
+            else if(user_name!=enter_name &&user_phone!=enter_moblie &&user_emailId!=enter_email)
+                {
+response.getWriter().println("Your Information Not Register With us.Please Check the Infomation or Register it");
+                }
+            
+           else
+                {
+                    response.getWriter().println("heeloo");
+                }
+            
+            
+            
             
               ServletConfig config=getServletConfig();  
             String Admin_name=config.getInitParameter("Admin_id"); 
-            String Admin_pass=config.getInitParameter("Admin_password"); 
          
+            final String username=Admin_name;
        String to = user_emailId;
  
        String from = Admin_name;
- 
-       String host = "smtp.gmail.com";
+    
+       String host = "192.168.1.133:8080";
+
  
 try{
-       Properties properties = System.getProperties();
+       Properties props = System.getProperties();
+        
+       props.setProperty("mail.smtp.host", host);
+
  
-       properties.setProperty("mail.smtp.host", host);
- 
-       Session session = Session.getDefaultInstance(properties);
-            
+        Session session = Session.getInstance(props);            
         // Create a default MimeMessage object.
          MimeMessage message = new MimeMessage(session);
          
@@ -102,16 +124,15 @@ try{
          
          // Send message
          Transport.send(message);
-
-         response.sendRedirect("type_otp.jsp");
+        String result = "Sent message successfully....";
+        
+            response.sendRedirect("type_otp.jsp");
 }
 catch(Exception exception)
 {
     System.out.println("error in mail adjustment :"+ exception);
 }
-            out.println("</body>");
-            out.println("</html>");
-        }
+                    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

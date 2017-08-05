@@ -4,6 +4,8 @@
 
 
 
+<%@page import="userDAO.LoadApp"%>
+<%@page import="java.sql.PreparedStatement"%>
 <%-- 
     Document   : index
     Created on : 13 Jul, 2017, 9:51:59 AM
@@ -25,9 +27,16 @@
  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 <link rel="stylesheet" type="text/css" href="header_footer_colour.css">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="index.css">
-<!--moblie jquery-->
+ 
+<!--jquery-->
+
+<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
  
         <script>
     function isNumberKey(evt){  
@@ -64,21 +73,7 @@
             return true;
     }
     
-    function emailval(value)
-    {
-        var pattern="[a-z0-9._%+-]+@gmail\.com$";
-    //var x=document.getElementById("emailID2");
-    if (pattern.test(value)) {
-     document.getElementById("emailval").innerHTML = "Write Pattern";
-alert("write patern");
-}
-else
-{
-     document.getElementById("emailval").innerHTML = "Please Write the Right Pattern";
-
-alert("worng patern");
-}
-    }
+    
     function validateNumber(event) {
     var key = window.event ? event.keyCode : event.which;
     if (event.keyCode === 8 || event.keyCode === 46) {
@@ -91,6 +86,88 @@ alert("worng patern");
 };
     
 </script>
+  <script>
+            function myFunction(val)
+         {  
+             var email_id=document.getElementById("emailid").value;
+             console.log(email_id);
+            $.ajax({
+            type:"post",
+            url:"emailChecking",
+//            async: true,
+            data:{email:email_id},
+            success: function (data, textStatus, jqXHR) {
+                        var result=data;
+//                  $("#dialog").html(result);
+//                $("#dialog").dialog("open");
+            alert(result);
+                    }
+                });
+                
+//                 $("#dialog").dialog({
+//        autoOpen: false,
+//        modal: true,
+//        title: "Details",
+//        buttons: {
+//            Close: function () {
+//                $(this).dialog('close');
+//            }
+//        }
+//    });
+        }
+         
+   
+          
+          </script>  
+          <style>
+              .ui-widget {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: .8em;
+
+}
+
+.ui-widget-content {
+    background: #F9F9F9;
+    border: 1px solid #90d93f;
+    color: #222222;
+}
+
+.ui-dialog {
+    left: 0;
+    outline: 0 none;
+    padding: 0 !important;
+    position: absolute;
+    top: 0;
+}
+
+#success {
+    padding: 0;
+    margin: 0; 
+}
+
+.ui-dialog .ui-dialog-content {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    overflow: auto;
+    position: relative;
+    padding: 0 !important;
+}
+
+.ui-widget-header {
+    background: #b0de78;
+    border: 0;
+    color: #fff;
+    font-weight: normal;
+    text-align: center;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    padding: 0.1em .5em;
+    position: relative;
+        font-size: 1em;
+}
+              
+          </style>
     
     </head>
     <body ng-app="myApp">
@@ -117,7 +194,7 @@ alert("worng patern");
   </div>
 </nav>
 <%
-            HttpSession session1=request.getSession();
+            HttpSession session1=request.getSession(false);
             session1.getAttribute("name");
             session1.invalidate();
             
@@ -143,7 +220,7 @@ alert("worng patern");
                 
                 <input style="border: none;border-bottom: 1px solid #66ccff;" 
             class="form-control" id="text" onKeyPress="return ValidateAlpha3(event)" type="text" 
-            placeholder="User Name" 
+            placeholder="First Name" 
             name="User_name" required>
             
             </div>
@@ -162,46 +239,104 @@ alert("worng patern");
                   <center>
             <button type="submit" class="btn btn-info ">Login</button>
                   </center>
+                      </form>     
+
                 <br>
-                <nav>
-                    <a href="#" data-toggle="popover" data-html="true" data-content="
-                       <form action='otp_generate' method='post'>
-                       <div class='form-group'>
-                 <input style='border: none;border-bottom: 1px solid #66ccff;' class='form-control' pattern='[a-zA-Z]*'  required 
-                 type='text' placeholder='Your First Name' name='first_name'>
-                    </div>
-
-                                          <div class='form-group'>
-                 <input style='border: none;border-bottom: 1px solid #66ccff;' class='form-control' pattern='[0-9]*'  required 
-                 type='number' placeholder='Your Moblie Number' name='phone'>
-                    </div>
- 
-                    
-                       <div class='form-group'>
-                 <input style='border: none;border-bottom: 1px solid #66ccff;' class='form-control' pattern='[a-zA-Z0-9#!._%]*@gmail\.com$'  required 
-                 type='text' placeholder='abc12@gmail.com' name='emailId'>
-                    </div>
-                    
-                    <button class='btn btn-danger btn-block'>Find password</button>
-                    </form>
-                    <br>
-                    " data-placement="top" Style="text-decoration: none"  >Forget Password?</a>
-                    
-                </nav>
+                  <nav>                                                                                         
+                      <a href="#" data-toggle="modal" data-target="#forgetpass" data-role="disabled" Style="text-decoration: none">Forget Password?</a>
+                  </nav>
             </div>
-      </form>     
-
-        </div>
+   </div>
       </div>
     </div>
-   <script>
-$(document).ready(function(){
-    $('[data-toggle="popover"]').popover();   
-});
-</script>
-
 <!--Login End-->               
 
+<div class="modal fade" id="forgetpass" role="dialog" >
+                <div class="modal-dialog modal-md">
+    
+      <!-- Modal content-->
+               <div class="modal-content">
+               <div class="modal-body">
+               <div>
+              <h4 style="text-align:center">Forget Passowrd</h4>
+               </div>
+          <center>
+          <hr style="border: 1px solid #000;width: 50px;">
+          </center>
+   
+                   <form name="form1" action="otp_generate" method="post">
+            <div class="form-group">
+                
+                <input style="border: none;border-bottom: 1px solid #66ccff;" 
+            class="form-control" id="user_name" onKeyPress="return ValidateAlpha3(event)" type="text" 
+            placeholder="Your First Name" 
+            name="first_name" required>
+            </div>
+                           
+           <div class="form-group">
+               <input type="text" id="user_phone"   name="phone" style="border: none;border-bottom: 1px solid #66ccff;" class="form-control" placeholder="Your Register Moblie Number"
+                      title="Please Enter the valid Number">
+           </div>
+                
+                <div class="form-group">
+                    <input pattern="[a-zA-Z0-9._%+-]*@gmail\.com" type="text" id="user_email"  name="emailId" style="border: none;border-bottom: 1px solid #66ccff;" class="form-control" placeholder="Your Register Email ID">
+                </div>
+
+                
+                  <center>
+                      <button type="submit" class="btn btn-danger" id="register"  onclick="form1.submit()">Find Password</button>
+                  </center>
+                      </form>     
+              </div>
+           </div>
+        </div>
+        </div>
+<script>
+                   var $input = $('input:text'),
+         $register = $('#register');
+
+        $register.attr('disabled', true);
+        $input.keyup(function() {
+     var trigger = false;
+         $input.each(function() {
+            if (!$(this).val()) {
+            trigger = true;
+        }
+    });
+    trigger ? $register.attr('disabled', true) : $register.removeAttr('disabled',false);
+});
+        
+        </script>
+        <script type="text/javascript">
+     var user_name=document.getElementById("user_name").value;
+    var user_email=document.getElementById("user_email").value;
+    var user_phone=document.getElementById("user_phone").value;
+     $(document).ready(function() {
+         //  $('#register').attr("disabled", true);
+         if(user_name,user_email,user_phone==null &&user_name,user_email,user_phone=="")
+                document.getElementById("button_check").disabled=true;
+        console.log(user_name+""+user_email+""+user_phone);
+   
+    });  
+    
+    
+        var form = $('#form1');
+ form.submit(function ()
+                {
+            $.ajax({
+            type:form.attr('method'),
+            url: form.attr('action'),
+            data:$("form").serialize(),
+            success: function (data, textStatus, jqXHR) {
+                        var result=data;
+            alert(result);
+                    }
+                });
+                return false;
+        });
+    </script>
+
+    
   <!--============================================================================-->
   
   <!--create profile--> 
@@ -256,16 +391,20 @@ myform.emailId.$invalid">
                 <input type="radio" required name="gender" value="Female">Female
            </label>
           <br><br>
+          
+         
+          
              <div class="form-group">
-                 <input style="border: none;border-bottom: 1px solid #66ccff;" class="form-control" ng-model="emailid"  id="emailID2" pattern="[a-z0-9._%+-]+@gmail\.com$" onchange="emailval(this.value)" ng-pattern="/[a-z0-9._%+-]+@gmail\.com$/" required 
-                    type="text" placeholder="Email id" name="emailid">
+                 <input style="border: none;border-bottom: 1px solid #66ccff;" class="form-control" ng-model="emailid" pattern="[a-z0-9._%+-]+@gmail\.com$"  ng-pattern="/[a-z0-9._%+-]+@gmail\.com$/" required 
+                        type="email" placeholder="Email id" value="abc123@gmail.com" id="emailid" onchange="myFunction(this.value)" name="emailid">
                           <span style="color:red" ng-show="myform.emailid.$dirty && 
                     myform.emailid.$invalid">
   <span ng-show="myform.emailid.$error.required">Email is required.</span>
   <span ng-show="myform.emailid.$error.pattern">Invalid email address.</span>
   </span>
-       
+                 <div id="dialog"></div>              
              </div>
+          
           <div class="form-group">
               <input style="border: none;border-bottom: 1px solid #66ccff;" class="form-control" required ng-model="uPassword" ng-patren="/.+/" type="Password" 
 placeholder="Password" name="uPassword">

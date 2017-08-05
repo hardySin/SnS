@@ -4,6 +4,9 @@
     Author     : D3LL
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="userDAO.LoadApp"%>
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="usersession.seatInterImpl"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="usersession.Seat"%>
@@ -79,14 +82,18 @@ and open theTo change this license header, choose License Headers in Project Pro
                                           String str=bf.toString();
      
 %>
+
+<script>
+    
+    </script>
         <div class="row"> 
-            <form  action="bookingInfo" method="post" >
+            <form  action="bookingInfo" method="post" onsubmit=" ">
             <div class="col-md-8">
                 <div  onclick="" class="well well-lg" style="width: 100%;height: 800px;box-shadow: 5px 10px 70px #333333">
     <!--first row -->
     <p><center>Normal Rs.100</center></p>
  <hr>
- 
+    
     <div class="col-md-6" id="seats">
         <input id="seat-1" class="seat-select" type="checkbox" value="1A,100" <%if( str.contains("1A") ){%>disabled<%}%>>
            <label for="seat-1" class="seat" style="text-align: center" >1A</label>
@@ -402,15 +409,29 @@ and open theTo change this license header, choose License Headers in Project Pro
             
             <div class="col-md-4" >
                 <div class="well well-lg" style="width: 100%;height: 700px;box-shadow: 5px 10px 70px #333333;">
-                      <img src="image/harryMet SejalPicHover.jpg" style="width:100%"/>
-                    <h1><%!String movie="Jab Harry Met Sejal";%><%=movie%>     </h1>   
+                    <% String place="",movie_name="",timing="",date="",pic="";
+                                  // String appPath = request.getServletContext().getContextPath();
+                        String query="select * from THEATER_DATA where theater_plan=?";
+                    PreparedStatement ps=LoadApp.conn.prepareStatement(query); 
+                    ps.setString(1,"bookingInfo.jsp");
+                    ResultSet rs=ps.executeQuery();
+                    while (rs.next()) {                            
+                           movie_name =rs.getString(2);
+                            place=rs.getString(3);
+                            date=rs.getString(4);
+                            timing=rs.getString(5);
+                            pic=rs.getString(6);
+    }
+%>
+                    <img src="<%=pic%>" style="width:100%"/>
+                      <h1> <%=movie_name%></h1>   
                     <hr>
-                    <h4><b>Place:</b><%!String place="Movietime ,Raja Garden";%><%=place%></h4>
+                    <h4><b>Place:</b><%=place%></h4>
                     &nbsp;&nbsp;           
-                            <h4><b>Timing:</b><%!String timing="10:45Am";%><%=timing%></h4>
+                            <h4><b>Timing:</b><%=timing%></h4>
                     &nbsp;&nbsp;           
                    
-                            <h4><b>Date:</b><%!String date="28 July,2017";%><%=date%></h4>
+                            <h4><b>Date:</b><%=date%></h4>
                                     
             <input type="hidden" name="user_info" value="${movie}">
             <input type="hidden" name="user_info" value="${place}">

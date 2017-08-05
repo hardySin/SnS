@@ -6,21 +6,25 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import user2Dao.message;
-import user2Dao.messageInterImp;
+import userDAO.LoadApp;
 
 /**
  *
  * @author D3LL
  */
-public class user_message extends HttpServlet {
+public class emailChecking extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>                              
      * methods.
      *
      * @param request servlet request
@@ -29,46 +33,28 @@ public class user_message extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+            throws ServletException, IOException, SQLException {
+        response.setContentType("text/plain");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet user_message</title>");            
-            out.println("</head>");
-            out.println("<body>");
-      
-                message mess=new message();
-                messageInterImp  messImp=new messageInterImp();
+           
             
-                
-                String []values=request.getParameterValues("username");
-           
-            for (int i = 0; i < values.length ; i++) {
-              System.out.println(values[i]);
-              
+            String emailID="";
+            String user_emailId=request.getParameter("email");
+            System.out.println("user email id :"+ user_emailId);
+            String query="select * from user_profiles where EMAILID=?";
+            PreparedStatement ps=LoadApp.conn.prepareStatement(query);
+            ps.setString(1, user_emailId);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next())    
+            {
+
+            emailID=rs.getString(5);
+            
             }
-            for (int i = 0; i < values.length; i++) {
-           
-              System.out.println("insdie the while loop in switch case before them :"+values[i]);
-                    switch(i)
-               {
-                             
-                    case 0: mess.setUsername(values[i]);break;
-                    case 1: mess.setEmail(values[i]);break;
-                    case 2: mess.setAddress(values[i]);break;
-                    case 3: mess.setPhone_no(values[i]);break;
-                    case 4: mess.setMessage(values[i]);break;
-               
-               }
-          
+            if (user_emailId.equals(emailID)) {
+                response.getWriter().println("This Email Id Register With us.Please Enter The Another one");
             }
-            messImp.message_add(mess);
-           response.sendRedirect("main.jsp");
-            out.println("</body>");
-            out.println("</html>");
+            
         }
     }
 
@@ -84,7 +70,11 @@ public class user_message extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(emailChecking.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -98,7 +88,11 @@ public class user_message extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(emailChecking.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -8,7 +8,6 @@
     <servlet>
         <servlet-name>database_servlet1</servlet-name>
         <servlet-class>database_servlet1</servlet-class>
-        
     </servlet>
     <servlet>
         <servlet-name>adminAddDta</servlet-name>
@@ -61,14 +60,14 @@
     <servlet>
         <servlet-name>otp_generate</servlet-name>
         <servlet-class>otp_generate</servlet-class>
-        <init-param>  
-<param-name>Admin_id</param-name>  
-<param-value>deep16hardy@gmail.com</param-value>  
-</init-param>
-<init-param>  
-<param-name>Admin_password</param-name>  
-<param-value>java$$php$$@123</param-value>  
-</init-param>
+        <init-param>
+            <param-name>Admin_id</param-name>
+            <param-value>deep16hardy@gmail.com</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>emailChecking</servlet-name>
+        <servlet-class>emailChecking</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>database_servlet1</servlet-name>
@@ -125,6 +124,10 @@
     <servlet-mapping>
         <servlet-name>otp_generate</servlet-name>
         <url-pattern>/otp_generate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>emailChecking</servlet-name>
+        <url-pattern>/emailChecking</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -52,18 +52,22 @@
             name="User_opt" required>
              </div>
         </form>
-            <%!String OTP,error_message;%>
+            <%!String OTP,error_message,pass;%>
             <%
                 
                 String user_otp=request.getParameter("User_opt");
-                String query="select password from user_profiles where id=?";
+                String query="select * from user_profiles where id=?";
             PreparedStatement ps=LoadApp.conn.prepareStatement(query);
             ps.setString(1,user_otp);
             ResultSet rs=ps.executeQuery();
-        while (true) {   
+        while (rs.next()) {   
+                
+                OTP=rs.getString(1);
+                pass=rs.getString(6);
+        }
             if(rs!=null)
             {
-              OTP=rs.getString(1);
+                
             }
             else
             {
@@ -75,9 +79,7 @@
         <p style="color:red"><%=error_message%></p>
         
         
-         <%   
-            }
-            %>
+         
         </div>        
             </center>
     </body>
