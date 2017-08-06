@@ -39,6 +39,7 @@ public class emailChecking extends HttpServlet {
            
             
             String emailID="";
+            String user_name=request.getParameter("name");
             String user_emailId=request.getParameter("email");
             System.out.println("user email id :"+ user_emailId);
             String query="select * from user_profiles where EMAILID=?";
@@ -53,6 +54,10 @@ public class emailChecking extends HttpServlet {
             }
             if (user_emailId.equals(emailID)) {
                 response.getWriter().println("This Email Id Register With us.Please Enter The Another one");
+            }
+            else
+            {
+    response.getWriter().println("Hi "+ user_name.substring(0).toUpperCase());
             }
             
         }

@@ -41,9 +41,9 @@
                    user_pic=rs.getString("user_pic");
                 }   
             %>
-            <img src="<%=user_pic%>"id="img_adjust" style="width:100px;height:100px;"
+            <img src="<%=user_pic%>"id="img_adjust" style="width:100px;height:100px;margin-left: 92%;z-index: 2;margin-top:-13% "
                  alt="user_pic"  class="img-circle">
-                            
+                             
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">

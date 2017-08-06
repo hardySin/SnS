@@ -90,12 +90,16 @@
             function myFunction(val)
          {  
              var email_id=document.getElementById("emailid").value;
-             console.log(email_id);
+        var first_name=document.getElementById("first_name").value;
+                var last_name=document.getElementById("last_name").value;
+        var username=first_name+""+last_name;
+                console.log(username);
+        console.log(email_id);
             $.ajax({
             type:"post",
             url:"emailChecking",
 //            async: true,
-            data:{email:email_id},
+            data:{email:email_id,name:username},
             success: function (data, textStatus, jqXHR) {
                         var result=data;
 //                  $("#dialog").html(result);
@@ -119,56 +123,6 @@
    
           
           </script>  
-          <style>
-              .ui-widget {
-    font-family: Verdana,Arial,sans-serif;
-    font-size: .8em;
-
-}
-
-.ui-widget-content {
-    background: #F9F9F9;
-    border: 1px solid #90d93f;
-    color: #222222;
-}
-
-.ui-dialog {
-    left: 0;
-    outline: 0 none;
-    padding: 0 !important;
-    position: absolute;
-    top: 0;
-}
-
-#success {
-    padding: 0;
-    margin: 0; 
-}
-
-.ui-dialog .ui-dialog-content {
-    background: none repeat scroll 0 0 transparent;
-    border: 0 none;
-    overflow: auto;
-    position: relative;
-    padding: 0 !important;
-}
-
-.ui-widget-header {
-    background: #b0de78;
-    border: 0;
-    color: #fff;
-    font-weight: normal;
-    text-align: center;
-}
-
-.ui-dialog .ui-dialog-titlebar {
-    padding: 0.1em .5em;
-    position: relative;
-        font-size: 1em;
-}
-              
-          </style>
-    
     </head>
     <body ng-app="myApp">
            <div class="Container"><h1 class="heading">Sound and Stage</h1>
@@ -200,7 +154,17 @@
             
 
         %>               
-               <!--Login start-->
+        <script>
+                var app=angular.module("myLoginApp",[]);
+                app.controller("myLoginController",function($scope)
+                {
+                var Enter_username=$scope.username; 
+                var Enter_password=$scope.password;
+                    
+                });
+                
+    </script>     
+        <!--Login start-->
              
                <div class="modal fade" id="login" role="dialog" >
                 <div class="modal-dialog modal-sm">
@@ -219,7 +183,7 @@
             <div class="form-group">
                 
                 <input style="border: none;border-bottom: 1px solid #66ccff;" 
-            class="form-control" id="text" onKeyPress="return ValidateAlpha3(event)" type="text" 
+            class="form-control" id="text" ng-model="username" onKeyPress="return ValidateAlpha3(event)" type="text" 
             placeholder="First Name" 
             name="User_name" required>
             
@@ -286,11 +250,17 @@
                   <center>
                       <button type="submit" class="btn btn-danger" id="register"  onclick="form1.submit()">Find Password</button>
                   </center>
+                       <br>
                       </form>     
+                   
+                    
+                   
+                   
               </div>
            </div>
         </div>
         </div>
+ 
 <script>
                    var $input = $('input:text'),
          $register = $('#register');
@@ -359,8 +329,8 @@
        
                  <div class="form-group">
                  <input  style="border: none;border-bottom: 1px solid #66ccff;" 
-class="form-control" id="firstname" onKeyPress="return ValidateAlpha(event);" type="text" 
-ng-model="firstname" ng-pattern="/^[A-Za-z]+$/" ng-minlenghth="4" placeholder="First name" 
+class="form-control" onKeyPress="return ValidateAlpha(event);" type="text" 
+ng-model="firstname" id="first_name" ng-pattern="/^[A-Za-z]+$/" ng-minlenghth="4" placeholder="First name" 
 name="firstname" >
                  <span style="color:red" ng-show="myform.firstname.$dirty && 
 myform.firstname.$invalid">
@@ -374,7 +344,7 @@ myform.firstname.$invalid">
           
           <div class="form-group">
                     <input style="border: none;border-bottom: 1px solid #66ccff;" 
-class="form-control" required type="text" ng-model="lastname" onKeyPress="return ValidateAlpha2(event);" ng-pattern="/^[A-Za-z]+$/" ng-minlenghth="3" placeholder="Last 
+class="form-control"  id="last_name" required type="text" ng-model="lastname" onKeyPress="return ValidateAlpha2(event);" ng-pattern="/^[A-Za-z]+$/" ng-minlenghth="3" placeholder="Last 
 name" name="lastname">
                  <span style="color:red" ng-show="myform.lastname.$dirty && 
 myform.emailId.$invalid">
